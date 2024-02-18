@@ -1,0 +1,234 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3C3C3C"
+    android:backgroundTint="#252525"
+    android:foregroundTint="#000000"
+    tools:context=".MainActivity"
+    tools:visibility="visible">
+
+    <!-- Top part layout -->
+
+    <!-- Bottom part layout -->
+
+    <!-- Select mode layout -->
+
+    <LinearLayout
+        android:id="@+id/systemPanelLayout"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectModeLayout">
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_weight="1"
+            android:text="Exit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- First input -->
+
+        <!-- Second input -->
+
+        <LinearLayout
+            android:id="@+id/clientInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/ipAddress"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#FFFFFF"
+                android:hint="IP Address"
+                android:textColor="#FDFDFD"
+                android:textColorHighlight="#C8C8C8"
+                android:textColorHint="#E1E1E1"
+                android:textColorLink="#DFDFDF" />
+
+            <EditText
+                android:id="@+id/portNum"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#FFFFFF"
+                android:hint="Port"
+                android:inputType="numberSigned"
+                android:textColor="#FDFDFD"
+                android:textColorHighlight="#C8C8C8"
+                android:textColorHint="#E1E1E1"
+                android:textColorLink="#DFDFDF" />
+
+        </LinearLayout>
+
+        <!-- Buttons -->
+
+        <TextView
+            android:id="@+id/clientStatus"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingTop="5dp"
+            android:text="Not Connected"
+            android:textAlignment="center"
+            android:textColor="#F6F6F6"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/connect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#BDBDBD"
+                android:text="Connect" />
+
+            <Button
+                android:id="@+id/disconnect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="#F8F8F8"
+                android:text="Disconnect" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout">
+
+        <!-- Text -->
+
+        <EditText
+            android:id="@+id/portServerNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:backgroundTint="#FFFFFF"
+            android:drawableTint="#FFFFFF"
+            android:hint="Port  (e.g. 25000)"
+            android:inputType="numberSigned"
+            android:textColor="#FDFDFD"
+            android:textColorHighlight="#C8C8C8"
+            android:textColorHint="#E1E1E1"
+            android:textColorLink="#DFDFDF" />
+
+        <TextView
+            android:id="@+id/serverStatus"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:backgroundTint="#000000"
+            android:paddingTop="5dp"
+            android:text="Server Offline"
+            android:textAlignment="center"
+            android:textColor="#F6F6F6"
+            android:textSize="16sp" />
+
+        <!-- Buttons -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#0B6363"
+                android:text="Start" />
+
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="#ACACAC"
+                android:backgroundTint="#A6A6A6"
+                android:foregroundTint="#A1A1A1"
+                android:text="Stop" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selectModeLayout"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomLayout">
+
+        <Button
+            android:id="@+id/clientMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="Client" />
+
+        <Button
+            android:id="@+id/serverMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="Server" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
