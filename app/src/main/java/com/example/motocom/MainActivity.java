@@ -175,26 +175,14 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Problem with permissions ...", Toast.LENGTH_SHORT).show();
+                                clientStatus.setText("Problem with permissions ...");
                             }
                         });
                         return;
                     }
-                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
+                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
                     microphone.startRecording();
 
-                    if (NoiseSuppressor.isAvailable()) {
-                        NoiseSuppressor noiseSuppressor = NoiseSuppressor.create(microphone.getAudioSessionId());
-                        if (noiseSuppressor != null) {
-                            noiseSuppressor.setEnabled(true);
-                        }
-                    }
-                    if (AcousticEchoCanceler.isAvailable()) {
-                        AcousticEchoCanceler echoCanceler = AcousticEchoCanceler.create(microphone.getAudioSessionId());
-                        if (echoCanceler != null) {
-                            echoCanceler.setEnabled(true);
-                        }
-                    }
                     // Initialize speakers
                     AudioTrack speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
                     speakers.play();
@@ -265,21 +253,8 @@ public class MainActivity extends AppCompatActivity {
                         });
                         return;
                     }
-                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
+                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
                     microphone.startRecording();
-
-                    if (NoiseSuppressor.isAvailable()) {
-                        NoiseSuppressor noiseSuppressor = NoiseSuppressor.create(microphone.getAudioSessionId());
-                        if (noiseSuppressor != null) {
-                            noiseSuppressor.setEnabled(true);
-                        }
-                    }
-                    if (AcousticEchoCanceler.isAvailable()) {
-                        AcousticEchoCanceler echoCanceler = AcousticEchoCanceler.create(microphone.getAudioSessionId());
-                        if (echoCanceler != null) {
-                            echoCanceler.setEnabled(true);
-                        }
-                    }
 
                     // Initialize speakers
                     AudioTrack speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
