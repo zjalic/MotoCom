@@ -6,14 +6,8 @@
     android:background="#3C3C3C"
     android:backgroundTint="#252525"
     android:foregroundTint="#000000"
-    tools:context=".MainActivity"
+    tools:context="mz.app.motocom.MainActivity"
     tools:visibility="visible">
-
-    <!-- Top part layout -->
-
-    <!-- Bottom part layout -->
-
-    <!-- Select mode layout -->
 
     <LinearLayout
         android:id="@+id/systemPanelLayout"
@@ -33,29 +27,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="2"
             android:text="@string/button_exit" />
 
-        <Button
-            android:id="@+id/help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:text="@string/button_help" />
-
-        <Button
-            android:id="@+id/about"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:text="@string/button_about" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,9 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- First input -->
-
-        <!-- Second input -->
 
         <LinearLayout
             android:id="@+id/clientInputLayout"
@@ -109,7 +81,6 @@
 
         </LinearLayout>
 
-        <!-- Buttons -->
 
         <TextView
             android:id="@+id/clientStatus"
@@ -160,7 +131,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topLayout">
 
-        <!-- Text -->
 
         <EditText
             android:id="@+id/portServerNum"
@@ -188,7 +158,6 @@
             android:textColor="#F6F6F6"
             android:textSize="16sp" />
 
-        <!-- Buttons -->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,0 +1,15 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_button_help"
+        android:title="Help"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_button_about"
+        android:title="About"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_button_exit"
+        android:title="Exit"
+        app:showAsAction="never" />
+</menu>
