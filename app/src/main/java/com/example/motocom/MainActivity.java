@@ -2,12 +2,8 @@ package com.example.motocom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioRecord;
-import android.media.AudioTrack;
-import android.media.MediaRecorder;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -24,13 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import com.example.motocom.service.ClientAudioService;
+import com.example.motocom.service.ServerAudioService;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText ipAddress, portNum, portServerNum;
+    private EditText ipAddressEditText, portNumEditText, portServerNumEditText;
     private Button connectBtn, disconnectBtn, startBtn, stopBtn, clientModeBtn, serverModeBtn, exitBtn;
     private TextView serverStatus, clientStatus;
     private LinearLayout clientLayout, serverLayout;
@@ -107,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFormElements() {
         // Fields
-        ipAddress = findViewById(R.id.ipAddress);
-        portNum = findViewById(R.id.portNum);
-        portServerNum = findViewById(R.id.portServerNum);
+        ipAddressEditText = findViewById(R.id.ipAddress);
+        portNumEditText = findViewById(R.id.portNum);
+        portServerNumEditText = findViewById(R.id.portServerNum);
         connectBtn = findViewById(R.id.connect);
         disconnectBtn = findViewById(R.id.disconnect);
         startBtn = findViewById(R.id.start);
@@ -130,139 +125,73 @@ public class MainActivity extends AppCompatActivity {
 
     private void clientConnect() {
 
-        String ipAddress = this.ipAddress.getText().toString();
-        String portStr = portNum.getText().toString();
+        String ipAddress = this.ipAddressEditText.getText().toString();
+        String portStr = portNumEditText.getText().toString();
         if (ipAddress.isEmpty() || portStr.isEmpty()) {
-            Toast.makeText(this, "Please enter IP Address and Port number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.info_insert_ip_and_port, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Thread clientThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int port = 25000;
-                try {
-                    port = Integer.parseInt(portStr);
-                } catch (NumberFormatException e) {
-                    clientStatus.setText(R.string.invalid_port_number_format_setting_to_25000);
-                }
-
-                try (Socket socket = new Socket(ipAddress, port)) {
-                    clientStatus.setText(R.string.connected);
-                    // Audio setup
-                    int sampleRate = 44100;
-                    int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
-                    int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-                    int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat);
-
-                    // Initialize microphone
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                clientStatus.setText(R.string.problem_with_permissions);
-                            }
-                        });
-                        return;
-                    }
-                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
-                    microphone.startRecording();
-
-                    // Initialize speakers
-                    AudioTrack speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
-                    speakers.play();
-
-                    byte[] buffer = new byte[bufferSize];
-
-                    // Audio streaming
-                    while (true) {
-                        int bytesRead = microphone.read(buffer, 0, bufferSize);
-                        socket.getOutputStream().write(buffer, 0, bytesRead);
-
-                        int bytesReceived = socket.getInputStream().read(buffer, 0, bufferSize);
-                        speakers.write(buffer, 0, bytesReceived);
-                    }
-
-
-                } catch (IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            clientStatus.setText(R.string.problem_connecting_to_server);
-                        }
-                    });
-                }
-
+        int port = 25000;
+        try {
+            port = Integer.parseInt(portStr);
+            if (port > 65535 || port < 1) {
+                port = 25000;
             }
-        });
-        clientThread.start();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, R.string.error_invalid_port_number_format_defaulted_to_25000, Toast.LENGTH_SHORT).show();
+        }
+
+        // Initialize microphone
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    serverStatus.setText(R.string.error_problem_with_permissions);
+                }
+            });
+            return;
+        } else {
+
+            clientStatus.setText(R.string.info_connected);
+            Intent serviceIntent = new Intent(this, ClientAudioService.class);
+            serviceIntent.putExtra("IP_ADDRESS", ipAddress);
+            serviceIntent.putExtra("PORT", port);
+            startService(serviceIntent);
+        }
     }
 
     private void serverStart() {
-        String portStr = portServerNum.getText().toString();
+        String portStr = portServerNumEditText.getText().toString();
         String ipAddress = getIP();
 
-        portServerNum.setVisibility(View.INVISIBLE);
-        Thread serverThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int port = 25000;
-                try {
-                    port = Integer.parseInt(portStr);
-                } catch (Exception ignored) {
+        portServerNumEditText.setVisibility(View.INVISIBLE);
 
-                }
-
-                String messageServerStarted = String.format(getString(R.string.server_started), ipAddress, port);
-                serverStatus.setText(messageServerStarted);
-
-                try (ServerSocket serverSocket = new ServerSocket(port)) {
-                    Socket clientSocket = serverSocket.accept();
-
-                    // Audio setup
-                    int sampleRate = 44100;
-                    int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
-                    int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-                    int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat);
-
-                    // Initialize microphone
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                serverStatus.setText(R.string.problem_with_permissions);
-                            }
-                        });
-                        return;
-                    }
-                    AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
-                    microphone.startRecording();
-
-                    // Initialize speakers
-                    AudioTrack speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
-                    speakers.play();
-
-                    byte[] buffer = new byte[bufferSize];
-
-                    // Audio streaming
-                    while (true) {
-                        int bytesRead = microphone.read(buffer, 0, bufferSize);
-                        clientSocket.getOutputStream().write(buffer, 0, bytesRead);
-
-                        int bytesReceived = clientSocket.getInputStream().read(buffer, 0, bufferSize);
-                        speakers.write(buffer, 0, bytesReceived);
-                    }
-                } catch (IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            serverStatus.setText(R.string.server_stopped);
-                        }
-                    });
-                }
+        int port = 25000;
+        try {
+            port = Integer.parseInt(portStr);
+            if (port > 65535 || port < 1) {
+                port = 25000;
             }
-        });
-        serverThread.start();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, R.string.error_invalid_port_number_format_defaulted_to_25000, Toast.LENGTH_SHORT).show();
+        }
+
+        // Initialize microphone
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    serverStatus.setText(R.string.error_problem_with_permissions);
+                }
+            });
+            return;
+        } else {
+            serverStatus.setText(String.format(getString(R.string.info_server_started), ipAddress, port));
+            Intent serviceIntent = new Intent(this, ServerAudioService.class);
+            serviceIntent.putExtra("PORT", port);
+            startService(serviceIntent);
+        }
     }
 
     @Override
@@ -296,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String getIP(){
+    private String getIP() {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         // Check if wifi is enabled

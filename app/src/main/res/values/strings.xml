@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">MotoCom</string>
-    <string name="problem_connecting_to_server">Problem connecting to server</string>
-    <string name="problem_with_permissions">Problem with permissions</string>
-    <string name="connected">Connected</string>
-    <string name="invalid_port_number_format_setting_to_25000">Invalid Port Number Format. Default 25000</string>
-    <string name="server_stopped">Server Stopped</string>
-    <string name="server_started">Server Started IP: %1$s Port: %2$d</string>
+    <string name="info_connected">Connected</string>
+    <string name="info_server_stopped">Server Stopped</string>
+    <string name="info_server_started">Server Started IP: %1$s Port: %2$d</string>
+    <string name="info_insert_ip_and_port">Please enter IP Address and Port number</string>
+    <string name="error_problem_connecting_to_server">Problem connecting to server</string>
+    <string name="error_problem_with_permissions">Problem with permissions</string>
+    <string name="error_invalid_port_number_format_defaulted_to_25000">Invalid Port Number Format. Default to 25000</string>
 </resources>
