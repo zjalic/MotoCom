@@ -1,10 +1,46 @@
 <resources>
     <string name="app_name">MotoCom</string>
+
+    <string name="error_problem_connecting_to_server">Problem connecting to server</string>
+    <string name="error_problem_with_permissions">Problem with permissions</string>
+    <string name="error_invalid_port_number_format_defaulted_to_25000">Invalid Port Number Format. Default to 25000</string>
+
     <string name="info_connected">Connected</string>
     <string name="info_server_stopped">Server Stopped</string>
     <string name="info_server_started">Server Started IP: %1$s Port: %2$d</string>
     <string name="info_insert_ip_and_port">Please enter IP Address and Port number</string>
-    <string name="error_problem_connecting_to_server">Problem connecting to server</string>
-    <string name="error_problem_with_permissions">Problem with permissions</string>
-    <string name="error_invalid_port_number_format_defaulted_to_25000">Invalid Port Number Format. Default to 25000</string>
+    <string name="info_not_connected">Not Connected</string>
+    <string name="info_connect">Connect</string>
+    <string name="info_disconnect">Disconnect</string>
+    <string name="info_server_offline">Server Offline</string>
+
+    <string name="hint_ip_address">IP Address</string>
+    <string name="hint_port">Port</string>
+    <string name="hint_port_server">Port (e.g. 25000)</string>
+
+    <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_client">Client</string>
+    <string name="button_server">Server</string>
+    <string name="button_close">Close</string>
+    <string name="button_exit">Exit</string>
+    <string name="button_help">Help</string>
+    <string name="button_about">About</string>
+
+    <string name="help_text">Usage:  \n
+        Server should click Server button and select port (optional, if not selected value will be 25000) and click Start.\n
+        Client should click Client and insert info from server which will be displayed on "server" phone (e.g. IP: 192.168.1.2 Port: 25000) and click "Connect"\n
+        \n
+        There is two options for using this app, using actual WiFi or Hotspot. \n
+        \n
+        Using actual WiFi: \n
+        Both device need to be on same WiFi, who will be Server and who will be Client is not important. \n
+        \n
+        Using Hotspot: \n
+        One device need to turn on Hotspot, other one need to connect to it. \n
+        It is important that device that is connected to Hotspot is Server, and one who is sharing Hotspot is Client \n
+    </string>
+    <string name="about_text">Application is used for Voice communication between two devices in offline mode (without internet).\n
+        It is utilising actual WiFi or Hotspot. Currently Application support P2P (Just two device).\n
+        App is in Beta still.\n</string>
 </resources>

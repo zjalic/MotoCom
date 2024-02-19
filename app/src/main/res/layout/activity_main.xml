@@ -30,12 +30,32 @@
 
         <Button
             android:id="@+id/exit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="2"
+            android:text="@string/button_exit" />
+
+        <Button
+            android:id="@+id/help"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="Exit" />
+            android:textSize="12sp"
+            android:text="@string/button_help" />
+
+        <Button
+            android:id="@+id/about"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/button_about" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,9 +87,9 @@
                 android:id="@+id/ipAddress"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:backgroundTint="#FFFFFF"
-                android:hint="IP Address"
+                android:hint="@string/hint_ip_address"
                 android:textColor="#FDFDFD"
                 android:textColorHighlight="#C8C8C8"
                 android:textColorHint="#E1E1E1"
@@ -80,7 +100,7 @@
                 android:layout_width="126dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="#FFFFFF"
-                android:hint="Port"
+                android:hint="@string/hint_port"
                 android:inputType="numberSigned"
                 android:textColor="#FDFDFD"
                 android:textColorHighlight="#C8C8C8"
@@ -96,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:paddingTop="5dp"
-            android:text="Not Connected"
+            android:text="@string/info_not_connected"
             android:textAlignment="center"
             android:textColor="#F6F6F6"
             android:textSize="16sp" />
@@ -110,19 +130,19 @@
                 android:id="@+id/connect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="#BDBDBD"
-                android:text="Connect" />
+                android:text="@string/info_connect" />
 
             <Button
                 android:id="@+id/disconnect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="#F8F8F8"
-                android:text="Disconnect" />
+                android:text="@string/info_disconnect" />
         </LinearLayout>
 
     </LinearLayout>
@@ -150,7 +170,7 @@
             android:layout_marginRight="15dp"
             android:backgroundTint="#FFFFFF"
             android:drawableTint="#FFFFFF"
-            android:hint="Port  (e.g. 25000)"
+            android:hint="@string/hint_port_server"
             android:inputType="numberSigned"
             android:textColor="#FDFDFD"
             android:textColorHighlight="#C8C8C8"
@@ -163,7 +183,7 @@
             android:layout_height="40dp"
             android:backgroundTint="#000000"
             android:paddingTop="5dp"
-            android:text="Server Offline"
+            android:text="@string/info_server_offline"
             android:textAlignment="center"
             android:textColor="#F6F6F6"
             android:textSize="16sp" />
@@ -179,21 +199,21 @@
                 android:id="@+id/start"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="#0B6363"
-                android:text="Start" />
+                android:text="@string/button_start" />
 
             <Button
                 android:id="@+id/stop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="#ACACAC"
                 android:backgroundTint="#A6A6A6"
                 android:foregroundTint="#A1A1A1"
-                android:text="Stop" />
+                android:text="@string/button_stop" />
         </LinearLayout>
 
     </LinearLayout>
@@ -215,19 +235,19 @@
             android:id="@+id/clientMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="Client" />
+            android:text="@string/button_client" />
 
         <Button
             android:id="@+id/serverMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:text="Server" />
+            android:text="@string/button_server" />
 
     </LinearLayout>
 

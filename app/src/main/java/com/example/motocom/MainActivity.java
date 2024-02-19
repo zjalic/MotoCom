@@ -26,7 +26,7 @@ import com.example.motocom.service.ServerAudioService;
 public class MainActivity extends AppCompatActivity {
 
     private EditText ipAddressEditText, portNumEditText, portServerNumEditText;
-    private Button connectBtn, disconnectBtn, startBtn, stopBtn, clientModeBtn, serverModeBtn, exitBtn;
+    private Button connectBtn, disconnectBtn, startBtn, stopBtn, clientModeBtn, serverModeBtn, exitBtn, helpBtn, aboutBtn;
     private TextView serverStatus, clientStatus;
     private LinearLayout clientLayout, serverLayout;
 
@@ -47,6 +47,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopApp();
+            }
+        });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -110,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.start);
         stopBtn = findViewById(R.id.stop);
         exitBtn = findViewById(R.id.exit);
+        helpBtn = findViewById(R.id.help);
+        aboutBtn = findViewById(R.id.about);
         clientModeBtn = findViewById(R.id.clientMode);
         serverModeBtn = findViewById(R.id.serverMode);
         serverStatus = findViewById(R.id.serverStatus);
