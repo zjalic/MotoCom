@@ -1,6 +1,5 @@
-package com.example.motocom.service;
+package mz.app.motocom.service;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,7 +7,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -17,12 +15,10 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.IBinder;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
-import com.example.motocom.MainActivity;
-import com.example.motocom.R;
+import mz.app.motocom.MainActivity;
+import mz.app.motocom.R;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -50,11 +46,18 @@ public class ClientAudioService extends Service {
                 startForeground(NOTIFICATION_ID, notification);
             } catch (Exception ignored) {
             }
+            // Audio setup
+            // Initialize speakers
+            // Audio streaming
             Thread clientThread = new Thread(new Runnable() {
                 @Override
+                @SuppressLint("MissingPermission")
                 public void run() {
-
+                    AudioRecord microphone = null;
+                    AudioTrack speakers = null;
                     try (Socket socket = new Socket(ipAddress, port)) {
+                        Intent successIntent = new Intent("mz.app.motocom.CLIENT_CONNECTED");
+                        sendBroadcast(successIntent);
                         // Audio setup
                         int sampleRate = 44100;
                         int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
@@ -62,11 +65,11 @@ public class ClientAudioService extends Service {
                         int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat);
 
 
-                        @SuppressLint("MissingPermission") AudioRecord microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
+                        microphone = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRate, AudioFormat.CHANNEL_IN_STEREO, audioFormat, bufferSize);
                         microphone.startRecording();
 
                         // Initialize speakers
-                        AudioTrack speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
+                        speakers = new AudioTrack(AudioManager.STREAM_VOICE_CALL, sampleRate, channelConfig, audioFormat, bufferSize, AudioTrack.MODE_STREAM);
                         speakers.play();
 
                         byte[] buffer = new byte[bufferSize];
@@ -80,14 +83,21 @@ public class ClientAudioService extends Service {
                             speakers.write(buffer, 0, bytesReceived);
                         }
 
-                    } catch (IOException ignored) {
-
+                    } catch (IOException e) {
+                        Intent clientExceptionIntent = new Intent("mz.app.motocom.CLIENT_EXCEPTION");
+                        sendBroadcast(clientExceptionIntent);
+                    } finally {
+                        if(microphone != null){
+                            microphone.release();
+                        }
+                        if(speakers != null){
+                            speakers.release();
+                        }
                     }
 
                 }
             });
             clientThread.start();
-
         }
         return START_STICKY;
     }
@@ -100,7 +110,6 @@ public class ClientAudioService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Clean up resources, stop ongoing calls, etc.
     }
 
     private void createNotificationChannel() {
@@ -120,7 +129,7 @@ public class ClientAudioService extends Service {
 
         // Build the notification with the PendingIntent
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Voice Call Service")
+                .setContentTitle("MotoCom Voice Service")
                 .setContentText("Voice call in progress")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent) // Set the PendingIntent to open the app

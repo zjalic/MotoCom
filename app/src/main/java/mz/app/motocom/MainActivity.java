@@ -1,12 +1,17 @@
-package com.example.motocom;
+package mz.app.motocom;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,13 +25,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.motocom.service.ClientAudioService;
-import com.example.motocom.service.ServerAudioService;
+import mz.app.motocom.R;
+
+import mz.app.motocom.activity.HelpActivity;
+import mz.app.motocom.activity.AboutActivity;
+import mz.app.motocom.service.ClientAudioService;
+import mz.app.motocom.service.ServerAudioService;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText ipAddressEditText, portNumEditText, portServerNumEditText;
-    private Button connectBtn, disconnectBtn, startBtn, stopBtn, clientModeBtn, serverModeBtn, exitBtn, helpBtn, aboutBtn;
+    private Button connectBtn, disconnectBtn, startBtn, stopBtn, clientModeBtn, serverModeBtn, exitBtn;
     private TextView serverStatus, clientStatus;
     private LinearLayout clientLayout, serverLayout;
 
@@ -47,22 +58,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopApp();
-            }
-        });
-
-        helpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        aboutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -111,8 +106,90 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_button_help) {
+            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_button_about) {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_button_exit) {
+            stopApp();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private final BroadcastReceiver socketStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Objects.equals(intent.getAction(), "mz.app.motocom.SERVER_STARTED")) {
+                int port = intent.getIntExtra("PORT", 25000);
+                String ipAddress = getIP();
+                serverStatus.setText(String.format(getString(R.string.info_server_started), ipAddress, port));
+            }
+
+            if (Objects.equals(intent.getAction(), "mz.app.motocom.SERVER_EXCEPTION")) {
+                serverStatus.setText(R.string.info_server_stopped);
+            }
+
+            if (Objects.equals(intent.getAction(), "mz.app.motocom.SERVER_CLIENT_CONNECTED")) {
+                serverStatus.setText(R.string.info_client_connected);
+            }
+
+            if (Objects.equals(intent.getAction(), "mz.app.motocom.CLIENT_CONNECTED")) {
+                clientStatus.setText(R.string.info_connected);
+            }
+
+            if (Objects.equals(intent.getAction(), "mz.app.motocom.CLIENT_EXCEPTION")) {
+                clientStatus.setText(R.string.info_not_connected);
+            }
+
+
+        }
+    };
+
+
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("mz.app.motocom.SERVER_CLIENT_CONNECTED");
+        filter.addAction("mz.app.motocom.SERVER_STARTED");
+        filter.addAction("mz.app.motocom.SERVER_EXCEPTION");
+        filter.addAction("mz.app.motocom.CLIENT_CONNECTED");
+        filter.addAction("mz.app.motocom.CLIENT_EXCEPTION");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(socketStatusReceiver, filter, Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(socketStatusReceiver, filter);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(socketStatusReceiver);
+    }
+
     private void stopApp() {
+        Intent serverServiceIntent = new Intent(this, ServerAudioService.class);
+        stopService(serverServiceIntent);
+        Intent clientServiceIntent = new Intent(this, ClientAudioService.class);
+        stopService(clientServiceIntent);
         finish();
+        finishAndRemoveTask();
         System.exit(0);
     }
 
@@ -126,8 +203,6 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.start);
         stopBtn = findViewById(R.id.stop);
         exitBtn = findViewById(R.id.exit);
-        helpBtn = findViewById(R.id.help);
-        aboutBtn = findViewById(R.id.about);
         clientModeBtn = findViewById(R.id.clientMode);
         serverModeBtn = findViewById(R.id.serverMode);
         serverStatus = findViewById(R.id.serverStatus);
@@ -144,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     private void clientConnect() {
 
         String ipAddress = this.ipAddressEditText.getText().toString();
-        String portStr = portNumEditText.getText().toString();
+        String portStr = this.portNumEditText.getText().toString();
         if (ipAddress.isEmpty() || portStr.isEmpty()) {
             Toast.makeText(this, R.string.info_insert_ip_and_port, Toast.LENGTH_SHORT).show();
             return;
@@ -157,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 port = 25000;
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(this, R.string.error_invalid_port_number_format_defaulted_to_25000, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_port_defaulted, Toast.LENGTH_SHORT).show();
         }
 
         // Initialize microphone
@@ -168,10 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     serverStatus.setText(R.string.error_problem_with_permissions);
                 }
             });
-            return;
         } else {
 
-            clientStatus.setText(R.string.info_connected);
             Intent serviceIntent = new Intent(this, ClientAudioService.class);
             serviceIntent.putExtra("IP_ADDRESS", ipAddress);
             serviceIntent.putExtra("PORT", port);
@@ -181,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void serverStart() {
         String portStr = portServerNumEditText.getText().toString();
-        String ipAddress = getIP();
 
         portServerNumEditText.setVisibility(View.INVISIBLE);
 
@@ -192,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 port = 25000;
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(this, R.string.error_invalid_port_number_format_defaulted_to_25000, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_port_defaulted, Toast.LENGTH_SHORT).show();
         }
 
         // Initialize microphone
@@ -203,9 +275,8 @@ public class MainActivity extends AppCompatActivity {
                     serverStatus.setText(R.string.error_problem_with_permissions);
                 }
             });
-            return;
         } else {
-            serverStatus.setText(String.format(getString(R.string.info_server_started), ipAddress, port));
+            //serverStatus.setText(String.format(getString(R.string.info_server_started), ipAddress, port));
             Intent serviceIntent = new Intent(this, ServerAudioService.class);
             serviceIntent.putExtra("PORT", port);
             startService(serviceIntent);

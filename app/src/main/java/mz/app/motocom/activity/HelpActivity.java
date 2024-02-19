@@ -1,4 +1,4 @@
-package com.example.motocom;
+package mz.app.motocom.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,15 +6,17 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AboutActivity extends AppCompatActivity {
+import mz.app.motocom.R;
+
+public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_help);
 
-        Button btnCloseAbout = findViewById(R.id.btnClose);
-        btnCloseAbout.setOnClickListener(new View.OnClickListener() {
+        Button btnCloseHelp = findViewById(R.id.btnClose);
+        btnCloseHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish(); // Close the help screen

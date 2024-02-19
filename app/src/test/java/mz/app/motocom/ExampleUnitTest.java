@@ -1,4 +1,4 @@
-package com.example.motocom;
+package mz.app.motocom;
 
 import org.junit.Test;
 

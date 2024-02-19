@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.motocom"
+    namespace = "mz.app.motocom"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.motocom"
+        applicationId = "mz.app.motocom"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
