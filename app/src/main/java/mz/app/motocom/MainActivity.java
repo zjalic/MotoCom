@@ -25,8 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import mz.app.motocom.R;
-
 import mz.app.motocom.activity.HelpActivity;
 import mz.app.motocom.activity.AboutActivity;
 import mz.app.motocom.service.ClientAudioService;

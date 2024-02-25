@@ -4,4 +4,6 @@
     <color name="primary_color_side">#0E597C</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ic_launcher_foreground">#000000</color>
+    <color name="ic_launcher_background">#3A8DB4</color>
 </resources>
