@@ -34,7 +34,7 @@ We take the security of your data seriously. While the App does not collect or s
 
 7. Debug Data
 
-The Application does not use any bug reporting service. All issues and bugs can be raised on the GitHub project: https://github.com/zjalic/MotoCom/issues
+The Application does not collect or store any debug data. We do not utilize any bug reporting services. Should you encounter any issues or bugs while using the app, we encourage you to report them directly to us via our GitHub project page: https://github.com/zjalic/MotoCom/issues. Your feedback helps us improve the MotoCom app for all users.
 
 8. Contact Us
 
