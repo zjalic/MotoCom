@@ -2,7 +2,7 @@ Privacy Policy
 
 Effective date: March 1, 2024
 
-This Privacy Policy (the "Policy") describes how I (Zija) (referred to in this Privacy Policy as "I", "we", "us"), as the developer of the MotoCom (the "App", "Application"), collects information when you use the App. This Policy also explains how we use and disclose the information we collect from you, and your rights in relation to that information. 
+This Privacy Policy (the "Policy") describes how I (Zija) (referred to in this Privacy Policy as "I", "we", "us"), as the developer of the MotoCom (the "App", "Application"), collects information when you use the App. This Policy also explains how we use and disclose the information collected from you, and your rights in relation to that information. 
 
 MotoCom is an open-source, free application developed by Zija.
 
@@ -20,17 +20,17 @@ We may update this Privacy Policy from time to time. Any changes or updates to t
 
 We do not collect any information from users of the App. Any data entered or generated within the App remains solely on your device and is not transmitted to us or stored by us in any form. The App facilitates peer-to-peer voice communication between connected devices, and any information exchanged during this process is limited to the direct communication between devices. Specifically, when two devices establish a P2P Voice Connection, the App utilizes the microphone to record voice, transmitting audio data directly to the connected device for immediate playback. It's important to note that no audio data is stored in any file, and it is immediately discarded after transmission to the receiving device. The App utilizes Hotspot/WiFi Connection to establish P2P Voice Connections and operates primarily in offline mode, ensuring that no external data collection or transmission occurs.
 
-4. Information Third Party Collect
+4. Information Third-Party Collects
 
 The Application does not connect to any Third-Party Servers/Apps/Links. Therefore, there is no Third-Party Collection.
 
 5. Children’s Privacy
 
-This App does not address anyone under the age of 13. We do not knowingly collect any personally identifiable information, especially from children under 13 years of age. We encourage parents and guardians to supervise and guide their children's use of digital services, including our MotoCom App. If you are a parent or guardian and believe that your child has provided personal information to us, please contact us at markozjalicdev@gmail.com
+The App is not intended for individuals under the age of 13. We do not knowingly collect any personally identifiable information, particularly from children under 13 years of age. We encourage parents and guardians to supervise and guide their children's use of digital services, including our MotoCom App. If you are a parent or guardian and believe that your child has provided personal information to us, please contact us at markozjalicdev@gmail.com
 
 6. Security
 
-We take the security of your data seriously. While the App does not collect or store any user information, using unknown, compromised or malicious WiFi/Hotspot could potentially leak your information. We advise users to exercise caution and use trusted networks when using the App to ensure the safety and privacy of their data.
+We take the security of your data seriously. While the App does not collect or store any user information, using unknown, compromised or malicious WiFi/Hotspot could potentially be risk for your information. We advise users to exercise caution and use trusted networks when using the App to ensure the safety and privacy of their data.
 
 7. Debug Data
 
