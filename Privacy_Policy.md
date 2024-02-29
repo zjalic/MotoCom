@@ -18,14 +18,7 @@ We may update this Privacy Policy from time to time. Any changes or updates to t
 
 3. Information We Collect
 
-The information that you feed in the App will be retained on your device and is not collected by us in any way. The information is only shared with the other connected device using P2P voice communication.
-
-When two devices are connected for P2P Voice Connection, the application uses microphone to record voice and directly transmit the audio data to the other connected device which will be produce on speaker immediately after receiving. Audio Data is not stored in any file, and it is lost when it is transmited to other device. When one device terminate connection P2P Voice Connection will be terminated for both device.
-
-Hotspot/WiFi Connection is used to establish P2P Voice Connection. Application is intended to work in offline mode. 
-
-
-We do not actively collect any information from users of the App. Any data entered or generated within the App remains solely on your device and is not transmitted to us or stored by us in any form. The App facilitates peer-to-peer voice communication between connected devices, and any information exchanged during this process is limited to the direct communication between devices. Specifically, when two devices establish a P2P Voice Connection, the App utilizes the microphone to record voice, transmitting audio data directly to the connected device for immediate playback. It's important to note that no audio data is stored in any file, and it is immediately discarded after transmission to the receiving device. Furthermore, the App utilizes Hotspot/WiFi Connection to establish P2P Voice Connections and operates primarily in offline mode, ensuring that no external data collection or transmission occurs.
+We do not collect any information from users of the App. Any data entered or generated within the App remains solely on your device and is not transmitted to us or stored by us in any form. The App facilitates peer-to-peer voice communication between connected devices, and any information exchanged during this process is limited to the direct communication between devices. Specifically, when two devices establish a P2P Voice Connection, the App utilizes the microphone to record voice, transmitting audio data directly to the connected device for immediate playback. It's important to note that no audio data is stored in any file, and it is immediately discarded after transmission to the receiving device. The App utilizes Hotspot/WiFi Connection to establish P2P Voice Connections and operates primarily in offline mode, ensuring that no external data collection or transmission occurs.
 
 4. Information Third Party Collect
 
