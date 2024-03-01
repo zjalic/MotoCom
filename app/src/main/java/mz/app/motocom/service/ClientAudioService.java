@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -43,7 +44,13 @@ public class ClientAudioService extends Service {
             // Build and display the notification for the foreground service
             try {
                 Notification notification = buildNotification();
-                startForeground(NOTIFICATION_ID, notification);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    startForeground(NOTIFICATION_ID, notification,
+                            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+                                    | ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE);
+                } else {
+                    startForeground(NOTIFICATION_ID, notification);
+                }
             } catch (Exception ignored) {
             }
             // Audio setup

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
     <application
         android:allowBackup="true"
@@ -23,13 +24,14 @@
             android:name=".service.ServerAudioService"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="mediaPlayback"
+            android:foregroundServiceType="mediaPlayback|microphone"
             android:permission="mz.app.motocom.permission.ACCESS_MOTOCOM_SERVER_AUDIO_SERVICE" />
 
         <service
             android:name=".service.ClientAudioService"
             android:enabled="true"
             android:exported="true"
+            android:foregroundServiceType="mediaPlayback|microphone"
             android:permission="mz.app.motocom.permission.ACCESS_MOTOCOM_CLIENT_AUDIO_SERVICE"
             />
 
